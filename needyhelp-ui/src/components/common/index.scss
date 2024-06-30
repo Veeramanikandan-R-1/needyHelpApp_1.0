@@ -1,0 +1,20 @@
+@import "../../utils/color.scss";
+.button-container {
+    border-radius: 50px;
+    background: $primaryColor;
+    whitespace: nowrap;
+    padding: 10px 22px;
+    color: $primaryBlack;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: $primaryWhite;
+        color: $primaryBlack;
+    }
+}

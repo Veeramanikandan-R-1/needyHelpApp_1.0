@@ -1,5 +1,4 @@
-import './App.css';
-import Navbar from './components/common/navbar';
+import './App.scss';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -9,24 +8,29 @@ import ErrorPage from './components/common/error-page';
 import Contact from './components/contact';
 import About from './components/about';
 import LandingPage from './components/landing-page';
+import Login from './components/login';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <LandingPage />,
     errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      {
-        path: "contact",
-        element: <Contact />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-    ],
-
+  },
+  { 
+    path: "dashboard", 
+    element: <Dashboard /> 
+  },
+  {
+    path: "contact",
+    element: <Contact />,
+  },
+  {
+    path: "about",
+    element: <About />,
+  },
+  {
+    path: "login",
+    element: <Login />,
   },
 ]);
 

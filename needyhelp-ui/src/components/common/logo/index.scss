@@ -1,0 +1,16 @@
+@import "../../../utils/color.scss";
+.logo-container{
+    color: $primaryWhite;
+    justify-self: flex-start;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    transform: scale(.8, 1);
+    &:hover {
+        color: $primaryColor;
+    }
+}
