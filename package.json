@@ -5,6 +5,9 @@
   "scripts": {
     "client": "cd needyhelp-ui && npm start",
     "server": "cd needyHelpBackend && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-server": "npm install --prefix needyHelpBackend",
+    "install-client": "npm install --prefix needyhelp-ui",
+    "install": "npm run install-server && npm run install-client"
   }
 }
