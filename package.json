@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "client": "cd needyhelp-ui && npm start",
+    "server": "cd needyHelpBackend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   }
 }

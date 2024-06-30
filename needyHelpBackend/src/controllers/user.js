@@ -9,6 +9,19 @@ const { accessSecretKey, refreshSecretKey } = require('../../config');
 const { isPasswordValid, isEmailValid } = require("../utils/validator");
 const verifyJWT = require("../utils/auth");
 const { accessTokenExpiryTime, refreshTokenExpiryTime } = require("../utils/constants");
+const passport = require("passport");
+const {Strategy} = require("passport-google-oauth20");
+
+function verifyCallback(accessToken, refreshToken, profile, done){
+    console.log('profile',profile);
+    done(null, profile);
+}
+const AUTH_OPTIONS = {
+    callbackURL: '/v1/user/auth/google/callback',
+    clientID: clientId,
+    clientSecret
+};
+passport.use(new Strategy(AUTH_OPTIONS, verifyCallback))
 
 // POST: register new user 
 router.post("/signup", async (req, res) => {
@@ -210,5 +223,24 @@ router.get("/:id", verifyJWT, async (req, res) => {
         res.status(400).json({ error });
     }
 });
+
+// OAUTH signin google
+router.get('/auth/google', passport.authenticate('google',{
+    scope: ['email','profile'],
+}, (req, res) => {
+    console.log('google called back 1');
+    return res;
+}));
+router.get('/auth/google/callback', passport.authenticate('google',{
+    failureRedirect:'/user/v1/failure',
+    successRedirect:'/',
+    session: true,
+}, (req, res) => {
+    console.log('google called back 1WW');
+    res.send(200).json({message:'Logged In Successfully'})
+}));
+router.get('/failure', (req,res)=>{
+    res.send().json({error:'Failed to log in using google!'})
+})
 
 module.exports = router
