@@ -14,4 +14,5 @@ jobs:
         with: 
           node-version: '20.13.1'
       - run: npm install
+      - run: npm install -g react-scripts
       - run: npm run build --prefix needyhelp-ui
