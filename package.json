@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "install-server": "npm install --prefix needyHelpBackend",
     "install-client": "npm install --prefix needyhelp-ui",
-    "install": "npm run install-server && npm run install-client"
+    "install": "npm run install-server && npm run install-client",
+    "test": "cd needyhelp-ui && npm test"
   }
 }
