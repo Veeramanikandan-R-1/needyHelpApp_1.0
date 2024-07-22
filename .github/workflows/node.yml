@@ -6,12 +6,18 @@ on:
     branches: [ main ]
 jobs:
   build:
+    env:
+      CI: true
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 20.X]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node JS version 20.13.1
+      - name: Use Node JS version ${{matrix.node-version}}
         uses: actions/setup-node@v4
         with: 
-          node-version: '20.13.1'
+          node-version: ${{matrix.node-version}}
       - run: npm install
       - run: npm run build --prefix needyhelp-ui
+      - run: npm test
