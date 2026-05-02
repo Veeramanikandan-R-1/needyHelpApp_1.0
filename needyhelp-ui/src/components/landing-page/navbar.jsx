@@ -4,19 +4,20 @@ import { FaBars } from "react-icons/fa";
 import { Link as LinkS } from "react-scroll";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ThemeToggle from '../common/theme-toggle';
 
 const Navbar = ({ toggle }) => {
   const [scrollNav, setScrollNav] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
-    const onScroll = () => setScrollNav(window.scrollY >= 16);
+    const onScroll = () => setScrollNav(window.scrollY >= 80);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const linkProps = { smooth: true, duration: 500, spy: true, exact: 'true', offset: -80 };
+  const linkProps = { smooth: true, duration: 500, spy: true, exact: 'true', offset: -80, activeClass: 'active' };
 
   return (
     <nav className={`nav-bar${scrollNav ? ' scrolled' : ''}`} aria-label="Primary">
@@ -39,13 +40,17 @@ const Navbar = ({ toggle }) => {
             <LinkS to="how" {...linkProps} className='nav-links'>How it works</LinkS>
           </li>
           <li className='nav-item'>
+            <LinkS to="impact" {...linkProps} className='nav-links'>Impact</LinkS>
+          </li>
+          <li className='nav-item'>
             <Link to="/about" className='nav-links'>About</Link>
           </li>
           <li className='nav-item'>
             <Link to="/contact" className='nav-links'>Contact</Link>
           </li>
         </ul>
-        <nav className='nav-button'>
+        <div className='nav-button'>
+          <ThemeToggle />
           {user ? (
             <Link className='nav-button-link' to="/dashboard">Dashboard</Link>
           ) : (
@@ -54,7 +59,7 @@ const Navbar = ({ toggle }) => {
               <Link className='nav-button-link' to="/signup">Get started</Link>
             </>
           )}
-        </nav>
+        </div>
       </div>
     </nav>
   )

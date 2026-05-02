@@ -1,5 +1,82 @@
 @import "./utils/color.scss";
 
+/* =================================================
+   Theme tokens — :root is dark by default,
+   [data-theme="light"] overrides for light mode.
+   ================================================= */
+:root {
+  color-scheme: dark;
+
+  /* brand */
+  --color-primary: #01bf71;
+  --color-primary-dark: #019e5c;
+  --color-primary-glow: rgba(1, 191, 113, 0.35);
+  --color-ink: #010606;
+  --color-paper: #ffffff;
+
+  /* surfaces */
+  --bg: #0a0d10;
+  --bg-elev-1: #11161b;
+  --bg-elev-2: #161c22;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* text */
+  --text: #e8ecef;
+  --text-muted: #9aa3ab;
+  --text-subtle: #5f6973;
+
+  /* semantic */
+  --danger: #ff4d6d;
+  --warning: #ffb547;
+
+  /* effects */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+  --gradient-primary: linear-gradient(135deg, #01bf71 0%, #00d4a3 100%);
+  --gradient-hero:
+    radial-gradient(ellipse at top, rgba(1, 191, 113, 0.18), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(0, 212, 163, 0.12), transparent 60%);
+  --grid-dot: rgba(255, 255, 255, 0.06);
+  --noise-opacity: 0.04;
+  --hairline: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-primary: #009d5d;          /* darker for AA on white */
+  --color-primary-dark: #007a48;
+  --color-primary-glow: rgba(0, 157, 93, 0.28);
+  --color-ink: #0a0d10;
+  --color-paper: #ffffff;
+
+  --bg: #f7f8fa;
+  --bg-elev-1: #ffffff;
+  --bg-elev-2: #f1f3f6;
+  --border: rgba(10, 13, 16, 0.08);
+  --border-strong: rgba(10, 13, 16, 0.16);
+
+  --text: #0e1116;
+  --text-muted: #4b5560;
+  --text-subtle: #6b7681;
+
+  --danger: #d6325a;
+  --warning: #c47a07;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+  --gradient-primary: linear-gradient(135deg, #009d5d 0%, #00b88a 100%);
+  --gradient-hero:
+    radial-gradient(ellipse at top, rgba(0, 157, 93, 0.12), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(0, 212, 163, 0.08), transparent 60%);
+  --grid-dot: rgba(10, 13, 16, 0.06);
+  --noise-opacity: 0.025;
+  --hairline: rgba(10, 13, 16, 0.04);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,8 +87,12 @@ html, body, #root {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Encode Sans Expanded", Roboto, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -20,6 +101,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background 250ms $ease, color 250ms $ease;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -32,11 +114,33 @@ input, textarea, select { font: inherit; color: inherit; }
   border-radius: $radiusSm;
 }
 
+/* =====================================================
+   Scroll-reveal primitives — components opt in by adding
+   .reveal (and optionally .reveal--in once visible). The
+   IntersectionObserver hook flips the class once.
+   ===================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 500ms $ease, transform 500ms $ease;
+  will-change: opacity, transform;
+}
+.reveal--in {
+  opacity: 1;
+  transform: none;
+}
+.reveal--delay-1 { transition-delay: 80ms; }
+.reveal--delay-2 { transition-delay: 160ms; }
+.reveal--delay-3 { transition-delay: 240ms; }
+.reveal--delay-4 { transition-delay: 320ms; }
+
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+  .reveal { opacity: 1; transform: none; }
 }
 
 ::selection { background: $primaryColorGlow; color: $text; }

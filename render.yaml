@@ -1,0 +1,28 @@
+services:
+  - name: needyhelp-backend
+    type: web
+    runtime: node
+    plan: free
+    rootDir: needyHelpBackend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: ACCESS_SECRET_KEY
+        sync: false
+      - key: REFRESH_SECRET_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false

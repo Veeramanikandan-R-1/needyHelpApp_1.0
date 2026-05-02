@@ -8,6 +8,14 @@ jobs:
   build:
     env:
       CI: true
+      mongoDbURI: ${{ secrets.MONGODB_URI }}
+      port: ${{ secrets.BACKEND_PORT || '4000' }}
+      accessSecretKey: ${{ secrets.ACCESS_SECRET_KEY }}
+      refreshSecretKey: ${{ secrets.REFRESH_SECRET_KEY }}
+      clientId: ${{ secrets.GOOGLE_CLIENT_ID }}
+      clientSecret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      frontendOrigin: ${{ secrets.FRONTEND_ORIGIN || 'http://localhost:3000' }}
+      adminEmail: ${{ secrets.ADMIN_EMAIL || '' }}
     strategy:
       matrix:
         node-version: [14.x, 16.x, 20.X]
@@ -18,5 +26,18 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version: ${{matrix.node-version}}
+      - name: Create backend env file
+        shell: bash
+        run: |
+          cat <<EOF > needyHelpBackend/.env
+          mongoDbURI=${mongoDbURI}
+          port=${port}
+          accessSecretKey=${accessSecretKey}
+          refreshSecretKey=${refreshSecretKey}
+          clientId=${clientId}
+          clientSecret=${clientSecret}
+          frontendOrigin=${frontendOrigin}
+          adminEmail=${adminEmail}
+          EOF
       - run: npm install
       - run: npm run build --prefix needyhelp-ui

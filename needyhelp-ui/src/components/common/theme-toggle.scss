@@ -1,0 +1,41 @@
+@import "../../utils/color.scss";
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid $borderStrong;
+  border-radius: $radiusFull;
+  padding: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color $dur $ease, background $dur $ease;
+  &:hover { border-color: $primaryColor; }
+
+  &__track {
+    width: 52px;
+    height: 28px;
+    border-radius: $radiusFull;
+    background: $bgElev2;
+    position: relative;
+    display: inline-block;
+  }
+  &__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: $radiusFull;
+    background: $bgElev1;
+    color: $primaryColor;
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    box-shadow: $shadowSm;
+    transition: transform 220ms $ease, color 220ms $ease, background 220ms $ease;
+  }
+  &[aria-pressed="true"] &__thumb {
+    transform: translateX(24px);
+    color: #c47a07; /* warm accent for sun */
+  }
+}

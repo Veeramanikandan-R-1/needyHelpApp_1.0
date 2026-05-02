@@ -1,43 +1,50 @@
+// =============================================================
+// Design tokens — exposed as CSS custom properties (see App.scss)
+// so they can theme-switch at runtime. The SCSS variables below
+// simply reference those custom properties so every component
+// that imported this file keeps working unchanged.
+// =============================================================
+
 // ===== Brand =====
-$primaryColor: #01bf71;
-$primaryColorDark: #019e5c;
-$primaryColorGlow: rgba(1, 191, 113, 0.35);
+$primaryColor: var(--color-primary);
+$primaryColorDark: var(--color-primary-dark);
+$primaryColorGlow: var(--color-primary-glow);
 
 // Legacy aliases (kept for backward compat)
-$primaryBlack: #010606;
-$primaryWhite: #fff;
+$primaryBlack: var(--color-ink);
+$primaryWhite: var(--color-paper);
 
-// ===== Surfaces (dark theme) =====
-$bg: #0a0d10;          // app background
-$bgElev1: #11161b;     // cards
-$bgElev2: #161c22;     // popovers / modals
-$border: rgba(255, 255, 255, 0.08);
-$borderStrong: rgba(255, 255, 255, 0.16);
+// ===== Surfaces =====
+$bg: var(--bg);
+$bgElev1: var(--bg-elev-1);
+$bgElev2: var(--bg-elev-2);
+$border: var(--border);
+$borderStrong: var(--border-strong);
 
 // ===== Text =====
-$text: #e8ecef;
-$textMuted: #9aa3ab;
-$textSubtle: #5f6973;
+$text: var(--text);
+$textMuted: var(--text-muted);
+$textSubtle: var(--text-subtle);
 
 // ===== Semantic =====
-$danger: #ff4d6d;
-$warning: #ffb547;
-$success: $primaryColor;
+$danger: var(--danger);
+$warning: var(--warning);
+$success: var(--color-primary);
 
-// ===== Effects =====
+// ===== Geometry (theme-invariant) =====
 $radiusSm: 6px;
 $radiusMd: 10px;
 $radiusLg: 16px;
 $radiusFull: 9999px;
 
-$shadowSm: 0 1px 2px rgba(0, 0, 0, 0.4);
-$shadowMd: 0 8px 24px rgba(0, 0, 0, 0.35);
-$shadowLg: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
-$shadowGlow: 0 0 0 4px $primaryColorGlow;
+// ===== Theme-aware effects =====
+$shadowSm: var(--shadow-sm);
+$shadowMd: var(--shadow-md);
+$shadowLg: var(--shadow-lg);
+$shadowGlow: 0 0 0 4px var(--color-primary-glow);
 
-$gradientPrimary: linear-gradient(135deg, #01bf71 0%, #00d4a3 100%);
-$gradientHero: radial-gradient(ellipse at top, rgba(1, 191, 113, 0.15), transparent 60%),
-               radial-gradient(ellipse at bottom right, rgba(0, 212, 163, 0.1), transparent 60%);
+$gradientPrimary: var(--gradient-primary);
+$gradientHero: var(--gradient-hero);
 
 $blur: saturate(160%) blur(16px);
 

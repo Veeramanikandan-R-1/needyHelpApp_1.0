@@ -5,7 +5,14 @@ const jwt = require("jsonwebtoken");
 
 const router = Router();
 
-const { accessSecretKey, refreshSecretKey, clientId, clientSecret } = require('../../config');
+const {
+    accessSecretKey,
+    refreshSecretKey,
+    clientId,
+    clientSecret,
+    frontendOrigin,
+    adminEmail,
+} = require('../../config');
 const { isPasswordValid, isEmailValid } = require("../utils/validator");
 const verifyJWT = require("../utils/auth");
 const { requireRole } = require("../utils/auth");
@@ -13,8 +20,9 @@ const { accessTokenExpiryTime, refreshTokenExpiryTime } = require("../utils/cons
 const passport = require("passport");
 const {Strategy} = require("passport-google-oauth20");
 
-const FRONTEND_ORIGIN = process.env.frontendOrigin || 'http://localhost:3000';
-const ADMIN_EMAIL = (process.env.adminEmail || process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+const FRONTEND_ORIGIN = frontendOrigin;
+const ADMIN_EMAIL = adminEmail.toLowerCase().trim();
+const hasGoogleOAuth = Boolean(clientId && clientSecret);
 
 // Auto-promote bootstrap admin: if a user signs up / logs in with the email in ADMIN_EMAIL,
 // flip their role to 'admin' + verified=true. One-time per account.
@@ -55,7 +63,9 @@ const AUTH_OPTIONS = {
     clientID: clientId,
     clientSecret,
 };
-passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
+if (hasGoogleOAuth) {
+    passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
+}
 
 // POST: register new user 
 router.post("/signup", async (req, res) => {
@@ -321,34 +331,39 @@ router.post("/change-password", verifyJWT, async (req, res) => {
 });
 
 // OAUTH signin google
-router.get('/auth/google',
-    passport.authenticate('google', { scope: ['email', 'profile'], session: false })
-);
+router.get('/auth/google', (req, res, next) => {
+    if (!hasGoogleOAuth) {
+        return res.status(503).json({ error: 'Google OAuth is not configured.' });
+    }
+    return passport.authenticate('google', { scope: ['email', 'profile'], session: false })(req, res, next);
+});
 
-router.get('/auth/google/callback',
-    passport.authenticate('google', {
+router.get('/auth/google/callback', (req, res, next) => {
+    if (!hasGoogleOAuth) {
+        return res.redirect(`${FRONTEND_ORIGIN}/login?error=google`);
+    }
+    return passport.authenticate('google', {
         failureRedirect: `${FRONTEND_ORIGIN}/login?error=google`,
         session: false,
-    }),
-    async (req, res) => {
-        try {
-            const user = req.user;
-            const tokens = user.generateAuthToken();
-            user.refreshtoken = [...(user.refreshtoken || []), tokens.refreshtoken];
-            await user.save();
-            res.cookie('jwt', tokens.refreshtoken, {
-                httpOnly: true,
-                maxAge: 7 * 24 * 60 * 60 * 1000,
-                sameSite: 'lax',
-            });
-            // Redirect to frontend; AccessToken in URL hash so it never hits server logs.
-            res.redirect(`${FRONTEND_ORIGIN}/oauth/callback#token=${tokens.accesstoken}`);
-        } catch (err) {
-            console.error('Google callback error', err);
-            res.redirect(`${FRONTEND_ORIGIN}/login?error=google`);
-        }
+    })(req, res, next);
+}, async (req, res) => {
+    try {
+        const user = req.user;
+        const tokens = user.generateAuthToken();
+        user.refreshtoken = [...(user.refreshtoken || []), tokens.refreshtoken];
+        await user.save();
+        res.cookie('jwt', tokens.refreshtoken, {
+            httpOnly: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            sameSite: 'lax',
+        });
+        // Redirect to frontend; AccessToken in URL hash so it never hits server logs.
+        res.redirect(`${FRONTEND_ORIGIN}/oauth/callback#token=${tokens.accesstoken}`);
+    } catch (err) {
+        console.error('Google callback error', err);
+        res.redirect(`${FRONTEND_ORIGIN}/login?error=google`);
     }
-);
+});
 
 router.get('/failure', (req, res) => {
     res.status(401).json({ error: 'Failed to log in using Google.' });

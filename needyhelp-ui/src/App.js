@@ -1,8 +1,7 @@
 import './App.scss';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
-import Dashboard from './components/dashboard';
+import { AuthProvider } from './context/AuthContext';import { ThemeProvider } from './context/ThemeContext';import Dashboard from './components/dashboard';
 import ErrorPage from './components/common/error-page';
 import ProtectedRoute from './components/common/protected-route';
 import RoleRoute from './components/common/role-route';
@@ -23,23 +22,26 @@ import MyActivity from './components/sponsorships/mine';
 import AdminSponsorshipReview from './components/sponsorships/admin-review';
 
 function App() {
+  const Router = window.location.hostname.includes('github.io') ? HashRouter : BrowserRouter;
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <AuthProvider>
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: '#161c22',
-                color: '#e8ecef',
-                border: '1px solid rgba(255,255,255,0.08)',
-                fontSize: '0.9rem',
-              },
-              success: { iconTheme: { primary: '#01bf71', secondary: '#0a0d10' } },
-              error:   { iconTheme: { primary: '#ff4d6d', secondary: '#0a0d10' } },
-            }}
-          />
+      <Router>
+        <ThemeProvider>
+          <AuthProvider>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: 'var(--bg-elev-2)',
+                  color: 'var(--text)',
+                  border: '1px solid var(--border)',
+                  fontSize: '0.9rem',
+                },
+                success: { iconTheme: { primary: 'var(--color-primary)', secondary: 'var(--bg)' } },
+                error:   { iconTheme: { primary: 'var(--danger)', secondary: 'var(--bg)' } },
+              }}
+            />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
@@ -107,8 +109,9 @@ function App() {
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-        </AuthProvider>
-      </BrowserRouter>
+          </AuthProvider>
+        </ThemeProvider>
+      </Router>
     </div>
   );
 }
