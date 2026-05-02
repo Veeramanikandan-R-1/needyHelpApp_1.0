@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
-  HiArrowLeft, HiOutlineHeart, HiOutlineMapPin, HiOutlineUsers,
-  HiOutlineCurrencyRupee, HiOutlineCheckBadge,
+  HiArrowLeft, HiOutlineMapPin, HiOutlineUsers, HiOutlineCurrencyRupee,
 } from 'react-icons/hi2';
 import toast from 'react-hot-toast';
 import api from '../../api/client';

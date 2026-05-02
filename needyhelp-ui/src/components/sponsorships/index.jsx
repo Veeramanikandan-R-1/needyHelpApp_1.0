@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   HiArrowLeft, HiMagnifyingGlass, HiOutlineHeart, HiOutlineMapPin,
-  HiOutlineUsers, HiArrowRight, HiOutlineCurrencyRupee,
+  HiOutlineUsers, HiArrowRight,
 } from 'react-icons/hi2';
 import toast from 'react-hot-toast';
 import api from '../../api/client';

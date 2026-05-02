@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  HiArrowLeft, HiOutlineUser, HiOutlineLockClosed, HiOutlineCheckBadge,
+  HiArrowLeft, HiOutlineUser, HiOutlineLockClosed,
 } from 'react-icons/hi2';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';

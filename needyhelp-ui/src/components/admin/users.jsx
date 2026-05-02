@@ -17,10 +17,6 @@ const useDebounced = (value, ms = 300) => {
   return v;
 };
 
-const RoleBadge = ({ role }) => (
-  <span className={`role-pill role-${role}`}>{role}</span>
-);
-
 const UserRow = ({ row, isMe, onUpdate }) => {
   const [busy, setBusy] = useState(null);
 
