@@ -1,5 +1,5 @@
-const accessTokenExpiryTime = '30s';
-const refreshTokenExpiryTime = '1d';
+const accessTokenExpiryTime = '15m';
+const refreshTokenExpiryTime = '7d';
 module.exports = {
     accessTokenExpiryTime,
     refreshTokenExpiryTime

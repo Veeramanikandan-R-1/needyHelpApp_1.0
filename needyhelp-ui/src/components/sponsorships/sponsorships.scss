@@ -1,0 +1,472 @@
+@import "../../utils/color.scss";
+
+.sponsorships-page,
+.sponsor-detail-page,
+.sponsor-new-page,
+.my-activity-page,
+.admin-review-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding: 2rem 1.5rem 4rem;
+
+  .shell { max-width: 1180px; margin: 0 auto; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: $textMuted; text-decoration: none; font-size: 0.85rem;
+    margin-bottom: 1rem;
+    &:hover { color: $primaryColor; }
+  }
+
+  .head {
+    margin-bottom: 1.5rem;
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: $primaryColor;
+      background: rgba(1, 191, 113, 0.1);
+      border: 1px solid rgba(1, 191, 113, 0.25);
+      padding: 0.3rem 0.75rem;
+      border-radius: $radiusFull;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 0.85rem;
+    }
+    h1 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    p { color: $textMuted; max-width: 720px; line-height: 1.6; }
+  }
+
+  .head-actions {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .btn-primary, .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.65rem 1.2rem; border-radius: $radiusFull;
+    text-decoration: none; font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform $dur $ease, filter $dur $ease, background $dur $ease, border-color $dur $ease;
+  }
+  .btn-primary {
+    background: $gradientPrimary;
+    color: #00120a;
+    font-weight: 600;
+    box-shadow: 0 8px 24px -10px $primaryColorGlow;
+    &:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    &:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  }
+  .btn-ghost {
+    background: transparent;
+    color: $text;
+    border: 1px solid $borderStrong;
+    &:hover { border-color: $primaryColor; color: $primaryColor; }
+  }
+}
+
+/* ---- Filters bar ---- */
+.sponsorships-page .filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  @media (max-width: 720px) { grid-template-columns: 1fr; }
+
+  .search { position: relative; display: flex; align-items: center;
+    svg { position: absolute; left: 0.85rem; color: $textMuted; pointer-events: none; }
+    input {
+      width: 100%; padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+      border-radius: $radiusMd; border: 1px solid $border;
+      background: $bgElev1; color: $text; font-size: 0.92rem;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; border-color: $primaryColor; }
+    }
+  }
+  select {
+    background: $bgElev1; border: 1px solid $border; color: $text;
+    padding: 0.65rem 0.75rem; border-radius: $radiusMd; font-size: 0.9rem;
+    &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+  }
+}
+
+.sponsorships-page .result-count { color: $textMuted; font-size: 0.85rem; margin: 0.5rem 0 1rem; }
+
+/* ---- Grid + cards ---- */
+.sponsorships-page .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+
+  .skel {
+    height: 260px; border-radius: $radiusLg;
+    background: linear-gradient(110deg, $bgElev1 30%, $bgElev2 50%, $bgElev1 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+  .empty {
+    grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: $textMuted;
+    svg { font-size: 2.4rem; color: $primaryColor; margin-bottom: 0.6rem; }
+    h3 { color: $text; font-size: 1.1rem; margin-bottom: 0.4rem; }
+  }
+}
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sponsorships-page .grid .skel { animation: none; }
+}
+
+.sponsor-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  background: $bgElev1; border: 1px solid $border;
+  border-radius: $radiusLg; padding: 1.25rem;
+  text-decoration: none; color: inherit;
+  transition: border-color $dur $ease, transform $dur $ease, box-shadow $dur $ease;
+
+  &:hover { border-color: rgba(1, 191, 113, 0.4); transform: translateY(-2px); box-shadow: $shadowMd; }
+  &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 2px; }
+
+  .tag {
+    align-self: flex-start; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.2rem 0.55rem; border-radius: $radiusFull;
+    background: rgba(1, 191, 113, 0.12); color: $primaryColor;
+    font-weight: 600;
+    &.tag-tuition_fee { background: rgba(1, 191, 113, 0.12); color: $primaryColor; }
+    &.tag-books       { background: rgba(125, 156, 255, 0.12); color: #7d9cff; }
+    &.tag-uniform     { background: rgba(255, 184, 77, 0.12); color: #ffb84d; }
+    &.tag-hostel      { background: rgba(255, 125, 200, 0.12); color: #ff7dc8; }
+    &.tag-exam_fee    { background: rgba(255, 100, 100, 0.12); color: #ff6464; }
+  }
+  h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.35; }
+  .for { color: $textMuted; font-size: 0.85rem; }
+  .story { color: $textMuted; font-size: 0.88rem; line-height: 1.5; flex: 1; }
+
+  .progress { margin-top: 0.25rem; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 0.85rem;
+    color: $textMuted; font-size: 0.78rem;
+    span { display: inline-flex; align-items: center; gap: 0.3rem; }
+    svg { color: $primaryColor; font-size: 0.95rem; }
+  }
+  .cta { color: $primaryColor; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem; }
+}
+
+.progress, .big-progress {
+  .bar {
+    width: 100%; height: 8px;
+    background: $bgElev2; border-radius: $radiusFull;
+    overflow: hidden;
+    span {
+      display: block; height: 100%;
+      background: $gradientPrimary;
+      transition: width 400ms $ease;
+    }
+  }
+  .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 0.35rem;
+    color: $textMuted; font-size: 0.8rem;
+    strong { color: $text; font-size: 0.95rem; font-weight: 700;
+      span { color: $textMuted; font-weight: 500; font-size: 0.78rem; }
+    }
+  }
+}
+
+/* ---- Detail page ---- */
+.sponsor-detail-page .two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 1.5rem;
+  align-items: start;
+  @media (max-width: 960px) { grid-template-columns: 1fr; }
+
+  main .head {
+    .tag {
+      align-self: flex-start; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem; border-radius: $radiusFull;
+      background: rgba(1, 191, 113, 0.12); color: $primaryColor; font-weight: 600;
+    }
+    .for { color: $textMuted; }
+    .bits {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem;
+      margin-top: 0.75rem; color: $textMuted; font-size: 0.85rem;
+      span { display: inline-flex; align-items: center; gap: 0.3rem; }
+      svg { color: $primaryColor; }
+    }
+  }
+}
+
+.big-progress {
+  background: $bgElev1; border: 1px solid $border;
+  padding: 1.25rem; border-radius: $radiusLg;
+  margin: 1.25rem 0;
+  .bar { height: 12px; }
+  .row strong { font-size: 1.1rem; }
+}
+
+.sponsor-detail-page .content {
+  background: $bgElev1; border: 1px solid $border;
+  border-radius: $radiusLg; padding: 1.5rem;
+  h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  p  { color: $textMuted; line-height: 1.7; white-space: pre-wrap; }
+}
+
+.sponsor-detail-page .supporters {
+  background: $bgElev1; border: 1px solid $border;
+  border-radius: $radiusLg; padding: 1.5rem;
+  margin-top: 1rem;
+  h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.85rem; }
+  ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+  li {
+    border-left: 2px solid $primaryColor;
+    padding: 0.2rem 0.85rem;
+    div { display: flex; align-items: baseline; gap: 0.6rem; }
+    strong { color: $text; }
+    .amount { color: $primaryColor; font-weight: 600; font-size: 0.85rem; }
+    p { color: $textMuted; font-size: 0.88rem; line-height: 1.55; margin: 0.2rem 0; }
+    time { color: $textSubtle; font-size: 0.75rem; }
+  }
+}
+
+.donate-box {
+  position: sticky; top: 1.5rem;
+  background: $bgElev1; border: 1px solid $border;
+  border-radius: $radiusLg; padding: 1.5rem;
+
+  h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .remaining { color: $primaryColor; font-weight: 600; margin-bottom: 1rem; }
+
+  &.closed {
+    text-align: center;
+    strong { display: block; margin-bottom: 0.5rem; }
+  }
+
+  .presets {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem; margin-bottom: 0.85rem;
+    button {
+      background: $bgElev2; border: 1px solid $border; color: $text;
+      padding: 0.55rem 0.4rem; border-radius: $radiusMd;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: border-color $dur $ease, background $dur $ease;
+      &:hover { border-color: $primaryColor; }
+      &.on { border-color: $primaryColor; background: rgba(1, 191, 113, 0.12); color: $primaryColor; }
+    }
+  }
+  label {
+    display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.85rem;
+    span { color: $textMuted; font-size: 0.78rem; }
+    input[type="number"], textarea {
+      background: $bgElev2; border: 1px solid $border; color: $text;
+      padding: 0.6rem 0.75rem; border-radius: $radiusMd; font-size: 0.9rem;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+    }
+    textarea { min-height: 70px; resize: vertical; font-family: inherit; }
+    &.check { flex-direction: row; align-items: center; gap: 0.4rem; color: $textMuted; font-size: 0.85rem;
+      input { accent-color: $primaryColor; }
+    }
+  }
+  .amt-input {
+    position: relative; display: flex; align-items: center;
+    svg { position: absolute; left: 0.7rem; color: $textMuted; }
+    input { width: 100%; padding-left: 2rem; }
+  }
+  .dev-note { display: block; margin-top: 0.55rem; color: $textSubtle; font-size: 0.72rem; text-align: center; }
+}
+
+/* ---- Poster pill (student vs teacher trust signal) ---- */
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-bottom: 0.45rem; }
+.poster-pill {
+  display: inline-flex; align-items: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: $radiusFull;
+  font-weight: 600;
+  border: 1px solid transparent;
+
+  &.poster-teacher {
+    background: rgba(125, 156, 255, 0.12);
+    color: #7d9cff;
+    border-color: rgba(125, 156, 255, 0.3);
+  }
+  &.poster-student {
+    background: rgba(255, 184, 77, 0.12);
+    color: #ffb84d;
+    border-color: rgba(255, 184, 77, 0.3);
+  }
+}
+
+.sponsor-new-page .poster-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: $textMuted;
+  font-size: 0.85rem;
+  strong { color: $primaryColor; font-weight: 600; }
+}
+.sponsor-new-page .post-form .hint {
+  color: $textSubtle;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.72rem;
+  margin-left: 0.3rem;
+}
+.sponsor-new-page .post-form .privacy {
+  display: block;
+  color: $textSubtle;
+  font-size: 0.78rem;
+  margin-top: -0.4rem;
+  strong { color: $textMuted; }
+}
+
+.review-card header .contact {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  background: $bgElev2;
+  border-radius: $radiusMd;
+  color: $textMuted;
+  font-size: 0.82rem;
+  strong { color: $text; }
+}
+
+/* ---- Status pills (shared) ---- */
+.status {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: $radiusFull;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  background: $bgElev2;
+  color: $textMuted;
+  border: 1px solid $border;
+
+  &.status-open, &.status-partially_funded { color: $primaryColor; border-color: rgba(1, 191, 113, 0.4); background: rgba(1, 191, 113, 0.1); }
+  &.status-fully_funded, &.status-delivered { color: #ffb84d; border-color: rgba(255, 184, 77, 0.4); background: rgba(255, 184, 77, 0.1); }
+  &.status-pending_review { color: #7d9cff; border-color: rgba(125, 156, 255, 0.4); background: rgba(125, 156, 255, 0.1); }
+  &.status-rejected, &.status-cancelled { color: $danger; border-color: rgba(255, 77, 109, 0.4); background: rgba(255, 77, 109, 0.1); }
+  &.status-paid { color: $primaryColor; border-color: rgba(1, 191, 113, 0.4); background: rgba(1, 191, 113, 0.1); }
+}
+
+/* ---- New post form ---- */
+.sponsor-new-page .post-form {
+  display: flex; flex-direction: column; gap: 0.85rem;
+  background: $bgElev1; border: 1px solid $border;
+  border-radius: $radiusLg; padding: 1.75rem;
+
+  label { display: flex; flex-direction: column; gap: 0.3rem;
+    span { color: $textMuted; font-size: 0.78rem; }
+    input, select, textarea {
+      background: $bgElev2; border: 1px solid $border; color: $text;
+      padding: 0.65rem 0.8rem; border-radius: $radiusMd; font-size: 0.92rem;
+      font-family: inherit;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+    }
+    textarea { resize: vertical; min-height: 100px; }
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;
+    @media (max-width: 600px) { grid-template-columns: 1fr; }
+  }
+  .err { color: $danger; font-size: 0.78rem; }
+  .actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem; }
+}
+
+.sponsor-new-page .gate {
+  text-align: center; padding: 3rem 1rem;
+  background: $bgElev1; border: 1px solid $border; border-radius: $radiusLg;
+  svg { font-size: 3rem; color: $primaryColor; margin-bottom: 0.5rem; }
+  h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  p { color: $textMuted; max-width: 480px; margin: 0 auto 1.25rem; line-height: 1.6; }
+}
+
+/* ---- My activity ---- */
+.my-activity-page .tabs {
+  display: flex; gap: 0.4rem; margin-bottom: 1rem;
+  button {
+    background: $bgElev1; border: 1px solid $border; color: $textMuted;
+    padding: 0.55rem 1rem; border-radius: $radiusFull; font-size: 0.88rem;
+    cursor: pointer;
+    transition: color $dur $ease, border-color $dur $ease, background $dur $ease;
+    &:hover { color: $text; }
+    &.on { color: $primaryColor; border-color: rgba(1, 191, 113, 0.4); background: rgba(1, 191, 113, 0.1); }
+  }
+}
+.my-activity-page .state { color: $textMuted; padding: 1rem 0; }
+.my-activity-page .empty {
+  text-align: center; padding: 3rem 1rem;
+  background: $bgElev1; border: 1px solid $border; border-radius: $radiusLg;
+  svg { font-size: 2.4rem; color: $primaryColor; margin-bottom: 0.6rem; }
+  h3 { color: $text; font-size: 1.1rem; margin-bottom: 0.4rem; }
+  p { color: $textMuted; margin-bottom: 1rem; }
+}
+.my-activity-page .list {
+  list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+  li a {
+    display: flex; align-items: center; justify-content: space-between;
+    background: $bgElev1; border: 1px solid $border; border-radius: $radiusLg;
+    padding: 1rem 1.25rem; text-decoration: none; color: inherit;
+    transition: border-color $dur $ease, transform $dur $ease;
+    &:hover { border-color: $primaryColor; transform: translateY(-1px); }
+    div { display: flex; flex-direction: column; gap: 0.25rem; }
+    .sub { color: $textMuted; font-size: 0.82rem; }
+    > svg { color: $primaryColor; }
+  }
+}
+
+/* ---- Admin review queue ---- */
+.admin-review-page .cards { display: flex; flex-direction: column; gap: 1rem; }
+.admin-review-page .empty {
+  text-align: center; padding: 3rem 1rem;
+  background: $bgElev1; border: 1px solid $border; border-radius: $radiusLg;
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  p { color: $textMuted; }
+}
+.review-card {
+  background: $bgElev1; border: 1px solid $border; border-radius: $radiusLg;
+  padding: 1.5rem;
+  header { margin-bottom: 0.75rem;
+    .tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem; border-radius: $radiusFull;
+      background: rgba(125, 156, 255, 0.12); color: #7d9cff;
+      font-weight: 600;
+    }
+    h3 { font-size: 1.1rem; font-weight: 700; margin: 0.5rem 0 0.25rem; }
+    .for { color: $textMuted; }
+    .meta { color: $textSubtle; font-size: 0.82rem; margin-top: 0.35rem; }
+  }
+  .story { color: $textMuted; line-height: 1.6; white-space: pre-wrap; padding: 0.85rem 1rem; background: $bgElev2; border-radius: $radiusMd; }
+  .notes { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.85rem 0;
+    span { color: $textMuted; font-size: 0.78rem; }
+    textarea { background: $bgElev2; border: 1px solid $border; color: $text;
+      padding: 0.6rem 0.75rem; border-radius: $radiusMd; font-family: inherit; font-size: 0.88rem;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+    }
+  }
+  .actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+  .btn-primary, .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.6rem 1.1rem; border-radius: $radiusFull; font-size: 0.88rem;
+    cursor: pointer; border: 1px solid transparent;
+  }
+  .btn-primary { background: $gradientPrimary; color: #00120a; font-weight: 600; }
+  .btn-ghost   { background: transparent; color: $danger; border-color: rgba(255, 77, 109, 0.4); }
+}
+
+/* ---- Pager ---- */
+.sponsorships-page .pager {
+  margin-top: 1.5rem;
+  display: flex; justify-content: center; align-items: center;
+  gap: 0.75rem; color: $textMuted; font-size: 0.85rem;
+
+  button {
+    background: $bgElev1; border: 1px solid $border; color: $text;
+    padding: 0.45rem 0.85rem; border-radius: $radiusMd; cursor: pointer;
+    transition: background $dur $ease, border-color $dur $ease;
+    &:hover:not(:disabled) { border-color: $primaryColor; color: $primaryColor; }
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+}

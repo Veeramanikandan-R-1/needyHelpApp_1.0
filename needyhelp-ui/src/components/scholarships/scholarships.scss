@@ -1,0 +1,279 @@
+@import "../../utils/color.scss";
+
+.scholarships-page,
+.schol-detail-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding: 2rem 1.5rem 4rem;
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $textMuted;
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    &:hover { color: $primaryColor; }
+  }
+
+  .head {
+    margin-bottom: 1.5rem;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: $primaryColor;
+      background: rgba(1, 191, 113, 0.1);
+      border: 1px solid rgba(1, 191, 113, 0.25);
+      padding: 0.3rem 0.75rem;
+      border-radius: $radiusFull;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 0.85rem;
+    }
+    h1 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    p { color: $textMuted; max-width: 720px; line-height: 1.6; }
+    .provider { color: $textSubtle; font-size: 0.95rem; }
+  }
+}
+
+/* ---- Filters bar ---- */
+.scholarships-page .filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+    .search { grid-column: 1 / -1; }
+    .check  { grid-column: 1 / -1; }
+  }
+
+  .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    svg { position: absolute; left: 0.85rem; color: $textMuted; pointer-events: none; }
+    input {
+      width: 100%;
+      padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+      border-radius: $radiusMd;
+      border: 1px solid $border;
+      background: $bgElev1;
+      color: $text;
+      font-size: 0.92rem;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; border-color: $primaryColor; }
+    }
+  }
+  select {
+    background: $bgElev1;
+    border: 1px solid $border;
+    color: $text;
+    padding: 0.65rem 0.75rem;
+    border-radius: $radiusMd;
+    font-size: 0.9rem;
+    &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+  }
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $textMuted;
+    font-size: 0.88rem;
+    background: $bgElev1;
+    border: 1px solid $border;
+    padding: 0.6rem 0.85rem;
+    border-radius: $radiusMd;
+    cursor: pointer;
+    user-select: none;
+    input { accent-color: $primaryColor; }
+  }
+}
+
+.scholarships-page .result-count {
+  color: $textMuted;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem;
+}
+
+/* ---- Grid ---- */
+.scholarships-page .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+
+  .skel {
+    height: 220px;
+    border-radius: $radiusLg;
+    background: linear-gradient(110deg, $bgElev1 30%, $bgElev2 50%, $bgElev1 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: $textMuted;
+    svg { font-size: 2.4rem; color: $primaryColor; margin-bottom: 0.6rem; }
+    h3 { color: $text; font-size: 1.1rem; margin-bottom: 0.4rem; }
+  }
+}
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .scholarships-page .grid .skel { animation: none; }
+}
+
+.schol-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: $bgElev1;
+  border: 1px solid $border;
+  border-radius: $radiusLg;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color $dur $ease, transform $dur $ease, box-shadow $dur $ease;
+
+  &:hover { border-color: rgba(1, 191, 113, 0.4); transform: translateY(-2px); box-shadow: $shadowMd; }
+  &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 2px; }
+
+  .tag {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.55rem;
+    border-radius: $radiusFull;
+    background: rgba(1, 191, 113, 0.12);
+    color: $primaryColor;
+    font-weight: 600;
+
+    &.tag-merit    { background: rgba(255, 184, 77, 0.12); color: #ffb84d; }
+    &.tag-need     { background: rgba(1, 191, 113, 0.12); color: $primaryColor; }
+    &.tag-caste    { background: rgba(125, 156, 255, 0.12); color: #7d9cff; }
+    &.tag-minority { background: rgba(255, 125, 200, 0.12); color: #ff7dc8; }
+    &.tag-sports   { background: rgba(255, 100, 100, 0.12); color: #ff6464; }
+  }
+  h3 { font-size: 1rem; font-weight: 600; line-height: 1.35; }
+  .provider { color: $textSubtle; font-size: 0.8rem; }
+  .summary  { color: $textMuted; font-size: 0.88rem; line-height: 1.5; flex: 1; }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.85rem;
+    color: $textMuted;
+    font-size: 0.78rem;
+    span { display: inline-flex; align-items: center; gap: 0.3rem; }
+    svg { color: $primaryColor; font-size: 0.95rem; }
+  }
+  .cta {
+    color: $primaryColor;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.25rem;
+  }
+}
+
+/* ---- Detail page ---- */
+.schol-detail-page .quick-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+
+  .fact {
+    background: $bgElev1;
+    border: 1px solid $border;
+    border-radius: $radiusLg;
+    padding: 0.95rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    svg { color: $primaryColor; font-size: 1.4rem; flex-shrink: 0; }
+    span { color: $textSubtle; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; display: block; }
+    strong { color: $text; font-size: 0.95rem; font-weight: 600; }
+  }
+}
+
+.schol-detail-page .content {
+  background: $bgElev1;
+  border: 1px solid $border;
+  border-radius: $radiusLg;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+
+  .lead { font-size: 1.05rem; line-height: 1.65; color: $text; margin-bottom: 1.2rem; }
+  h2 { font-size: 1.05rem; font-weight: 700; margin: 1.4rem 0 0.5rem; letter-spacing: -0.01em; }
+  p  { color: $textMuted; line-height: 1.7; }
+
+  .tags-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: $radiusFull;
+    background: $bgElev2;
+    color: $textMuted;
+    font-size: 0.78rem;
+    border: 1px solid $border;
+    svg { color: $primaryColor; font-size: 0.85rem; }
+  }
+}
+
+.schol-detail-page .apply-bar {
+  text-align: center;
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $gradientPrimary;
+    color: #00120a;
+    font-weight: 700;
+    padding: 0.85rem 1.6rem;
+    border-radius: $radiusFull;
+    text-decoration: none;
+    box-shadow: 0 8px 24px -10px $primaryColorGlow;
+    transition: transform $dur $ease, filter $dur $ease;
+    &:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  }
+  p { color: $textSubtle; font-size: 0.8rem; margin-top: 0.6rem; }
+}
+
+/* ---- Pager (shared) ---- */
+.scholarships-page .pager {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  color: $textMuted;
+  font-size: 0.85rem;
+
+  button {
+    background: $bgElev1;
+    border: 1px solid $border;
+    color: $text;
+    padding: 0.45rem 0.85rem;
+    border-radius: $radiusMd;
+    cursor: pointer;
+    transition: background $dur $ease, border-color $dur $ease;
+    &:hover:not(:disabled) { border-color: $primaryColor; color: $primaryColor; }
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+}

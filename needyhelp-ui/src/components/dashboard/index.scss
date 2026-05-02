@@ -1,0 +1,266 @@
+@import "../../utils/color.scss";
+
+.dashboard-page {
+    min-height: 100vh;
+    background: $bg;
+    background-image: $gradientHero;
+    color: $text;
+
+    .dash-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: rgba(10, 13, 16, 0.7);
+        backdrop-filter: $blur;
+        -webkit-backdrop-filter: $blur;
+        border-bottom: 1px solid $border;
+
+        @media (max-width: 600px) { padding: 0.875rem 1rem; }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: $primaryColor;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .brand { text-decoration: none; }
+
+        .avatar-menu {
+            position: relative;
+
+            .avatar-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                background: transparent;
+                border: 1px solid $border;
+                padding: 0.3rem 0.85rem 0.3rem 0.3rem;
+                border-radius: $radiusFull;
+                cursor: pointer;
+                color: $text;
+                transition: border-color $dur $ease, background $dur $ease;
+                &:hover { border-color: $borderStrong; background: rgba(255,255,255,0.04); }
+
+                img, .initials {
+                    width: 32px; height: 32px;
+                    border-radius: $radiusFull;
+                    object-fit: cover;
+                    background: $gradientPrimary;
+                    color: #00120a;
+                    font-weight: 700;
+                    font-size: 0.78rem;
+                    display: grid;
+                    place-items: center;
+                }
+                .who {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    line-height: 1.1;
+                    @media (max-width: 480px) { display: none; }
+                    .name { font-size: 0.85rem; font-weight: 600; }
+                    .role {
+                        font-size: 0.7rem;
+                        color: $textMuted;
+                        text-transform: capitalize;
+                        display: inline-flex; align-items: center; gap: 0.2rem;
+                        svg { color: $primaryColor; }
+                    }
+                }
+            }
+
+            .dropdown {
+                position: absolute;
+                top: calc(100% + 0.5rem);
+                right: 0;
+                min-width: 200px;
+                background: $bgElev2;
+                border: 1px solid $border;
+                border-radius: $radiusMd;
+                padding: 0.35rem;
+                box-shadow: $shadowLg;
+                z-index: 30;
+                animation: ddFade 160ms $ease;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                    width: 100%;
+                    background: transparent;
+                    border: none;
+                    color: $text;
+                    text-align: left;
+                    padding: 0.55rem 0.7rem;
+                    border-radius: $radiusSm;
+                    font-size: 0.88rem;
+                    cursor: pointer;
+                    transition: background $dur $ease;
+                    &:hover { background: rgba(255,255,255,0.05); }
+                    &.danger { color: $danger; &:hover { background: rgba(255, 77, 109, 0.08); } }
+                    svg { font-size: 1rem; opacity: 0.85; }
+                }
+                hr { border: none; border-top: 1px solid $border; margin: 0.3rem 0; }
+            }
+        }
+    }
+
+    .banner {
+        max-width: 1100px;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(135deg, rgba(1,191,113,0.1), rgba(0,212,163,0.05));
+        border: 1px solid rgba(1, 191, 113, 0.3);
+        padding: 1rem 1.25rem;
+        border-radius: $radiusLg;
+        flex-wrap: wrap;
+        strong { color: $text; font-size: 0.95rem; }
+        p { color: $textMuted; font-size: 0.85rem; margin-top: 0.15rem; }
+        .banner-cta {
+            background: $gradientPrimary;
+            color: #00120a;
+            border: none;
+            font-weight: 600;
+            padding: 0.55rem 1.1rem;
+            border-radius: $radiusFull;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            &:hover { filter: brightness(1.05); }
+        }
+    }
+
+    .dash-main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 3rem 2rem 4rem;
+
+        @media (max-width: 600px) { padding: 2rem 1rem 3rem; }
+
+        .hello {
+            margin-bottom: 2.5rem;
+
+            h1 {
+                font-size: clamp(1.8rem, 4vw, 2.4rem);
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                .dot { color: $primaryColor; }
+            }
+            p { color: $textMuted; margin-top: 0.4rem; }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+
+            .stat-card {
+                display: flex;
+                gap: 1rem;
+                align-items: flex-start;
+                padding: 1.25rem;
+                background: $bgElev1;
+                border: 1px solid $border;
+                border-radius: $radiusLg;
+                transition: border-color $dur $ease, transform $dur $ease;
+
+                &:hover {
+                    border-color: $borderStrong;
+                    transform: translateY(-2px);
+                }
+
+                .stat-icon {
+                    display: grid;
+                    place-items: center;
+                    width: 40px; height: 40px;
+                    border-radius: $radiusMd;
+                    background: rgba(1, 191, 113, 0.12);
+                    color: $primaryColor;
+                    font-size: 1.2rem;
+                    flex-shrink: 0;
+                }
+
+                .stat-meta {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.15rem;
+                    .stat-label { color: $textMuted; font-size: 0.8rem; }
+                    .stat-value { color: $text; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+                    .stat-hint  { color: $textSubtle; font-size: 0.75rem; margin-top: 0.2rem; }
+                }
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border: 1px dashed $borderStrong;
+            border-radius: $radiusLg;
+            background: $bgElev1;
+
+            h2 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+            p { color: $textMuted; max-width: 480px; margin: 0 auto 1rem; font-size: 0.92rem; }
+            code {
+                display: inline-block;
+                font-size: 0.75rem;
+                color: $textSubtle;
+                background: rgba(255, 255, 255, 0.04);
+                padding: 0.25rem 0.5rem;
+                border-radius: $radiusSm;
+            }
+        }
+
+        .quick-links {
+            margin-top: 2rem;
+            h2 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.85rem; color: $text; letter-spacing: -0.01em; }
+            .qlinks-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 0.85rem;
+            }
+            .qlink {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
+                gap: 0.85rem;
+                background: $bgElev1;
+                border: 1px solid $border;
+                border-radius: $radiusLg;
+                padding: 1rem 1.2rem;
+                text-decoration: none;
+                color: inherit;
+                transition: border-color $dur $ease, transform $dur $ease, background $dur $ease;
+                &:hover { border-color: rgba(1, 191, 113, 0.4); transform: translateY(-2px); background: linear-gradient(180deg, $bgElev1, rgba(1,191,113,0.04)); }
+                &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 2px; }
+                .icon {
+                    width: 40px; height: 40px;
+                    display: grid; place-items: center;
+                    border-radius: $radiusMd;
+                    background: rgba(1, 191, 113, 0.12);
+                    color: $primaryColor;
+                    font-size: 1.2rem;
+                }
+                strong { display: block; font-weight: 600; font-size: 0.95rem; }
+                span   { color: $textMuted; font-size: 0.82rem; }
+                > svg  { color: $primaryColor; }
+            }
+        }
+    }
+}
+
+@keyframes ddFade { from { opacity: 0; transform: translateY(-4px) } to { opacity: 1; transform: translateY(0) } }

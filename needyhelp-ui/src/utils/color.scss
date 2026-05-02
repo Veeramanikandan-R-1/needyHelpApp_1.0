@@ -1,3 +1,45 @@
+// ===== Brand =====
 $primaryColor: #01bf71;
+$primaryColorDark: #019e5c;
+$primaryColorGlow: rgba(1, 191, 113, 0.35);
+
+// Legacy aliases (kept for backward compat)
 $primaryBlack: #010606;
 $primaryWhite: #fff;
+
+// ===== Surfaces (dark theme) =====
+$bg: #0a0d10;          // app background
+$bgElev1: #11161b;     // cards
+$bgElev2: #161c22;     // popovers / modals
+$border: rgba(255, 255, 255, 0.08);
+$borderStrong: rgba(255, 255, 255, 0.16);
+
+// ===== Text =====
+$text: #e8ecef;
+$textMuted: #9aa3ab;
+$textSubtle: #5f6973;
+
+// ===== Semantic =====
+$danger: #ff4d6d;
+$warning: #ffb547;
+$success: $primaryColor;
+
+// ===== Effects =====
+$radiusSm: 6px;
+$radiusMd: 10px;
+$radiusLg: 16px;
+$radiusFull: 9999px;
+
+$shadowSm: 0 1px 2px rgba(0, 0, 0, 0.4);
+$shadowMd: 0 8px 24px rgba(0, 0, 0, 0.35);
+$shadowLg: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+$shadowGlow: 0 0 0 4px $primaryColorGlow;
+
+$gradientPrimary: linear-gradient(135deg, #01bf71 0%, #00d4a3 100%);
+$gradientHero: radial-gradient(ellipse at top, rgba(1, 191, 113, 0.15), transparent 60%),
+               radial-gradient(ellipse at bottom right, rgba(0, 212, 163, 0.1), transparent 60%);
+
+$blur: saturate(160%) blur(16px);
+
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+$dur: 200ms;

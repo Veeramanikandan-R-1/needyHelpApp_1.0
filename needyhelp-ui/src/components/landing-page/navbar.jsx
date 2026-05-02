@@ -3,83 +3,57 @@ import Logo from '../common/logo'
 import { FaBars } from "react-icons/fa";
 import { Link as LinkS } from "react-scroll";
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const Navbar = ({toggle}) => {
+const Navbar = ({ toggle }) => {
   const [scrollNav, setScrollNav] = useState(false);
-
-  const changeNav = () => {
-    if (window.scrollY >= 80) {
-      setScrollNav(true);
-    } else {
-      setScrollNav();
-    }
-  };
+  const { user } = useAuth();
 
   useEffect(() => {
-    window.addEventListener("scroll", changeNav);
+    const onScroll = () => setScrollNav(window.scrollY >= 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const linkProps = { smooth: true, duration: 500, spy: true, exact: 'true', offset: -80 };
+
   return (
-    <nav className='nav-bar' style={{background: scrollNav ? "#000" : "transparent"}}>
+    <nav className={`nav-bar${scrollNav ? ' scrolled' : ''}`} aria-label="Primary">
       <div className='nav-container'>
         <Logo />
-        <div className='mobile-icon' onClick={toggle}>
+        <button
+          type="button"
+          className='mobile-icon'
+          onClick={toggle}
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
           <FaBars />
-        </div>
+        </button>
         <ul className="nav-menu">
           <li className='nav-item'>
-            <LinkS to="about"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              className='nav-links'
-              >About</LinkS>
+            <LinkS to="what" {...linkProps} className='nav-links'>What we do</LinkS>
           </li>
           <li className='nav-item'>
-            <LinkS to="donate"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              className='nav-links'
-              >Donate/Receive</LinkS>
+            <LinkS to="how" {...linkProps} className='nav-links'>How it works</LinkS>
           </li>
           <li className='nav-item'>
-            <LinkS to="services"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              className='nav-links'
-              >Services</LinkS>
+            <Link to="/about" className='nav-links'>About</Link>
           </li>
           <li className='nav-item'>
-            <LinkS to="signup"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              className='nav-links'
-              >Sign Up</LinkS>
-          </li>
-          <li className='nav-item'>
-            <LinkS to="contact"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              className='nav-links'
-              >Contact</LinkS>
+            <Link to="/contact" className='nav-links'>Contact</Link>
           </li>
         </ul>
         <nav className='nav-button'>
-          <Link className='nav-button-link' to="/signin">Sign In</Link>
+          {user ? (
+            <Link className='nav-button-link' to="/dashboard">Dashboard</Link>
+          ) : (
+            <>
+              <Link className='nav-button-ghost' to="/login">Sign in</Link>
+              <Link className='nav-button-link' to="/signup">Get started</Link>
+            </>
+          )}
         </nav>
       </div>
     </nav>

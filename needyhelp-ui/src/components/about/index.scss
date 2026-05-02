@@ -1,0 +1,139 @@
+@import "../../utils/color.scss";
+
+.about-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding: 4rem 1.5rem 5rem;
+
+  .shell {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .back {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $textMuted;
+    text-decoration: none;
+    font-size: 0.88rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: $radiusFull;
+    transition: color $dur $ease, background $dur $ease;
+    &:hover { color: $text; background: rgba(255,255,255,0.04); }
+  }
+
+  .head {
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: $primaryColor;
+      background: rgba(1, 191, 113, 0.1);
+      border: 1px solid rgba(1, 191, 113, 0.25);
+      padding: 0.35rem 0.8rem;
+      border-radius: $radiusFull;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: $textMuted;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    @media (max-width: 760px) { grid-template-columns: 1fr; }
+
+    .pillar {
+      background: $bgElev1;
+      border: 1px solid $border;
+      border-radius: $radiusLg;
+      padding: 1.5rem;
+      transition: border-color $dur $ease, transform $dur $ease;
+      &:hover { border-color: rgba(1, 191, 113, 0.3); transform: translateY(-2px); }
+
+      .icon-box {
+        display: grid;
+        place-items: center;
+        width: 44px; height: 44px;
+        border-radius: $radiusMd;
+        background: rgba(1, 191, 113, 0.12);
+        color: $primaryColor;
+        font-size: 1.3rem;
+        margin-bottom: 0.9rem;
+      }
+      h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+      p  { color: $textMuted; font-size: 0.9rem; line-height: 1.55; }
+    }
+  }
+
+  .origin {
+    background: $bgElev1;
+    border: 1px solid $border;
+    border-radius: $radiusLg;
+    padding: 2rem;
+
+    h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.85rem; letter-spacing: -0.015em; }
+    p  { color: $textMuted; line-height: 1.7; & + p { margin-top: 0.85rem; } }
+
+    .from {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: $primaryColor;
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+  }
+
+  .cta {
+    text-align: center;
+    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+
+    .cta-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+
+    .btn-primary, .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: $radiusFull;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: transform $dur $ease, filter $dur $ease, background $dur $ease, border-color $dur $ease;
+    }
+    .btn-primary {
+      background: $gradientPrimary;
+      color: #00120a;
+      font-weight: 600;
+      box-shadow: 0 8px 24px -10px $primaryColorGlow;
+      &:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    }
+    .btn-ghost {
+      background: transparent;
+      color: $text;
+      border: 1px solid $borderStrong;
+      &:hover { background: rgba(255,255,255,0.04); border-color: $primaryColor; color: $primaryColor; }
+    }
+  }
+}

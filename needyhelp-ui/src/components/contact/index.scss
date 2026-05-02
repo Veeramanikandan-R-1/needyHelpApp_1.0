@@ -1,0 +1,151 @@
+@import "../../utils/color.scss";
+
+.contact-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding: 4rem 1.5rem 5rem;
+
+  .c-shell {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $primaryColor;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    &:hover { filter: brightness(1.1); }
+  }
+
+  .head {
+    margin-bottom: 2.5rem;
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+    }
+    p { color: $textMuted; max-width: 560px; line-height: 1.6; }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    @media (max-width: 720px) { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: $bgElev1;
+    border: 1px solid $border;
+    border-radius: $radiusLg;
+    padding: 1.5rem;
+    transition: border-color $dur $ease, transform $dur $ease;
+    &:hover { border-color: rgba(1, 191, 113, 0.3); transform: translateY(-2px); }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      .icon-box {
+        display: grid;
+        place-items: center;
+        width: 40px; height: 40px;
+        flex-shrink: 0;
+        border-radius: $radiusMd;
+        background: rgba(1, 191, 113, 0.12);
+        color: $primaryColor;
+        font-size: 1.15rem;
+      }
+      .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
+        .label {
+          color: $textMuted;
+          font-size: 0.78rem;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+        .value {
+          color: $text;
+          font-size: 0.98rem;
+          word-break: break-word;
+          a {
+            color: $text;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color $dur $ease, border-color $dur $ease;
+            &:hover { color: $primaryColor; border-bottom-color: $primaryColor; }
+          }
+        }
+        .sub { color: $textSubtle; font-size: 0.82rem; margin-top: 0.1rem; }
+      }
+    }
+  }
+
+  .person-card {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    background:
+      linear-gradient(180deg, $bgElev1 0%, rgba(1, 191, 113, 0.04) 100%);
+
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: $radiusFull;
+      background: $gradientPrimary;
+      color: #00120a;
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px -10px $primaryColorGlow;
+    }
+    .who {
+      display: flex; flex-direction: column; gap: 0.2rem;
+      .name { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+      .role { color: $textMuted; font-size: 0.9rem; }
+    }
+  }
+
+  .actions {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: $radiusFull;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: transform $dur $ease, filter $dur $ease, background $dur $ease;
+    }
+    .btn-primary {
+      background: $gradientPrimary;
+      color: #00120a;
+      font-weight: 600;
+      box-shadow: 0 8px 24px -10px $primaryColorGlow;
+      &:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    }
+    .btn-ghost {
+      background: transparent;
+      color: $text;
+      border: 1px solid $borderStrong;
+      &:hover { background: rgba(255,255,255,0.04); border-color: $primaryColor; color: $primaryColor; }
+    }
+  }
+}

@@ -1,0 +1,225 @@
+@import "../../utils/color.scss";
+
+.admin-users-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding: 2rem 1.5rem 4rem;
+
+  .page-head {
+    max-width: 1180px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: $textMuted;
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      &:hover { color: $primaryColor; }
+    }
+    h1 {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      svg { color: $primaryColor; }
+    }
+    p { color: $textMuted; max-width: 560px; line-height: 1.55; font-size: 0.92rem; }
+
+    .count {
+      font-size: 0.85rem;
+      color: $textMuted;
+      background: $bgElev1;
+      border: 1px solid $border;
+      padding: 0.45rem 0.85rem;
+      border-radius: $radiusFull;
+    }
+  }
+
+  .filters {
+    max-width: 1180px;
+    margin: 0 auto 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0.6rem;
+    @media (max-width: 720px) { grid-template-columns: 1fr; }
+
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      svg {
+        position: absolute;
+        left: 0.85rem;
+        color: $textMuted;
+        pointer-events: none;
+      }
+      input {
+        width: 100%;
+        padding: 0.65rem 0.9rem 0.65rem 2.3rem;
+        border-radius: $radiusMd;
+        border: 1px solid $border;
+        background: $bgElev1;
+        color: $text;
+        font-size: 0.9rem;
+        &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; border-color: $primaryColor; }
+      }
+    }
+    select {
+      background: $bgElev1;
+      border: 1px solid $border;
+      color: $text;
+      padding: 0.6rem 0.8rem;
+      border-radius: $radiusMd;
+      font-size: 0.9rem;
+      &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+    }
+  }
+
+  .table-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: $bgElev1;
+    border: 1px solid $border;
+    border-radius: $radiusLg;
+    overflow: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+
+      thead th {
+        text-align: left;
+        padding: 0.85rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: $textSubtle;
+        border-bottom: 1px solid $border;
+        background: $bgElev2;
+        position: sticky;
+        top: 0;
+      }
+      tbody td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid $border;
+        vertical-align: middle;
+      }
+      tbody tr:last-child td { border-bottom: none; }
+      tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+      .muted { color: $textMuted; }
+      .state { text-align: center; color: $textMuted; padding: 2.5rem 1rem; }
+
+      .user-cell .who {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        .avatar {
+          width: 36px; height: 36px;
+          border-radius: $radiusFull;
+          background: rgba(1, 191, 113, 0.12);
+          color: $primaryColor;
+          display: grid;
+          place-items: center;
+          font-size: 0.78rem;
+          font-weight: 700;
+          flex-shrink: 0;
+          overflow: hidden;
+          img { width: 100%; height: 100%; object-fit: cover; }
+        }
+        .meta { min-width: 0; }
+        .name {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-weight: 600;
+          .verified { color: $primaryColor; font-size: 0.95rem; }
+          .me-tag {
+            background: rgba(1, 191, 113, 0.15);
+            color: $primaryColor;
+            font-size: 0.65rem;
+            padding: 0.05rem 0.4rem;
+            border-radius: $radiusFull;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+          }
+        }
+        .email { color: $textMuted; font-size: 0.8rem; }
+      }
+
+      select {
+        background: $bgElev2;
+        color: $text;
+        border: 1px solid $border;
+        padding: 0.35rem 0.55rem;
+        border-radius: $radiusSm;
+        font-size: 0.85rem;
+        &:focus-visible { outline: 2px solid $primaryColor; outline-offset: 1px; }
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+      }
+
+      .verify-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.78rem;
+        border-radius: $radiusFull;
+        border: 1px solid $border;
+        background: transparent;
+        color: $textMuted;
+        cursor: pointer;
+        transition: background $dur $ease, color $dur $ease, border-color $dur $ease;
+
+        &:hover { color: $text; border-color: $borderStrong; }
+        &.on {
+          color: $primaryColor;
+          border-color: rgba(1, 191, 113, 0.4);
+          background: rgba(1, 191, 113, 0.1);
+        }
+        &:disabled { opacity: 0.6; cursor: progress; }
+        svg { font-size: 0.95rem; }
+      }
+    }
+  }
+
+  .pager {
+    max-width: 1180px;
+    margin: 1rem auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    color: $textMuted;
+    font-size: 0.85rem;
+
+    button {
+      background: $bgElev1;
+      border: 1px solid $border;
+      color: $text;
+      padding: 0.45rem 0.85rem;
+      border-radius: $radiusMd;
+      cursor: pointer;
+      transition: background $dur $ease, border-color $dur $ease;
+      &:hover:not(:disabled) { border-color: $primaryColor; color: $primaryColor; }
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
+    }
+  }
+}

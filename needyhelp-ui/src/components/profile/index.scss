@@ -1,0 +1,205 @@
+@import "../../utils/color.scss";
+
+.profile-page {
+  min-height: 100vh;
+  background: $bg;
+  background-image: $gradientHero;
+  color: $text;
+  padding-bottom: 4rem;
+
+  .loading {
+    text-align: center;
+    color: $textMuted;
+    padding: 4rem 1rem;
+  }
+
+  .p-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 2rem;
+    background: rgba(10, 13, 16, 0.7);
+    backdrop-filter: $blur;
+    border-bottom: 1px solid $border;
+    @media (max-width: 600px) { padding: 0.875rem 1rem; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: $textMuted;
+      text-decoration: none;
+      font-size: 0.88rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: $radiusFull;
+      transition: color $dur $ease, background $dur $ease;
+      &:hover { color: $text; background: rgba(255,255,255,0.04); }
+    }
+    h1 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+  }
+
+  .p-shell {
+    max-width: 960px;
+    margin: 2.5rem auto 0;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    @media (max-width: 760px) {
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+      gap: 1rem;
+    }
+  }
+
+  .p-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-self: start;
+    position: sticky;
+    top: 80px;
+    @media (max-width: 760px) {
+      flex-direction: row;
+      position: static;
+      overflow-x: auto;
+      border-bottom: 1px solid $border;
+      padding-bottom: 0.5rem;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: transparent;
+      border: 1px solid transparent;
+      color: $textMuted;
+      padding: 0.65rem 0.85rem;
+      border-radius: $radiusMd;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all $dur $ease;
+      white-space: nowrap;
+      &:hover { color: $text; background: rgba(255,255,255,0.04); }
+      &.active {
+        color: $primaryColor;
+        background: rgba(1, 191, 113, 0.08);
+        border-color: rgba(1, 191, 113, 0.2);
+      }
+    }
+  }
+
+  .p-content {
+    background: $bgElev1;
+    border: 1px solid $border;
+    border-radius: $radiusLg;
+    padding: 1.75rem;
+    @media (max-width: 600px) { padding: 1.25rem; }
+  }
+
+  .p-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+
+    .card-head {
+      margin-bottom: 0.5rem;
+      h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+      p  { color: $textMuted; font-size: 0.85rem; margin-top: 0.25rem; }
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      @media (max-width: 600px) { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      color: $textMuted;
+
+      span { color: $text; font-weight: 500; em { color: $textSubtle; font-style: normal; font-weight: 400; } }
+
+      input, select, textarea {
+        background: $bgElev2;
+        border: 1px solid $border;
+        color: $text;
+        padding: 0.65rem 0.85rem;
+        border-radius: $radiusMd;
+        font-size: 0.92rem;
+        font-family: inherit;
+        transition: border-color $dur $ease, box-shadow $dur $ease;
+        &:focus {
+          outline: none;
+          border-color: $primaryColor;
+          box-shadow: 0 0 0 3px rgba(1, 191, 113, 0.15);
+        }
+        &:disabled { color: $textSubtle; cursor: not-allowed; }
+        &[aria-invalid="true"] { border-color: $danger; }
+      }
+      textarea { resize: vertical; min-height: 90px; }
+      small { color: $textSubtle; font-size: 0.78rem; }
+      small.err  { color: $danger; }
+      small.warn { color: #ffb84d; }
+
+      .pwd-wrap {
+        position: relative;
+        display: flex;
+        input { width: 100%; padding-right: 2.6rem; }
+        .pwd-toggle {
+          position: absolute;
+          right: 0.4rem;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 32px; height: 32px;
+          display: grid;
+          place-items: center;
+          background: transparent;
+          border: none;
+          border-radius: $radiusSm;
+          color: $textMuted;
+          cursor: pointer;
+          transition: color $dur $ease, background $dur $ease;
+          &:hover { color: $text; background: rgba(255,255,255,0.04); }
+          svg { font-size: 1.1rem; }
+        }
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: $gradientPrimary;
+        color: #00120a;
+        font-weight: 600;
+        font-size: 0.92rem;
+        padding: 0.7rem 1.4rem;
+        border: none;
+        border-radius: $radiusFull;
+        cursor: pointer;
+        box-shadow: 0 8px 24px -10px $primaryColorGlow;
+        transition: filter $dur $ease, transform $dur $ease;
+        &:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.05); }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+      }
+    }
+  }
+}
